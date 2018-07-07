@@ -5,19 +5,16 @@ module.exports = function(RED) {
 
   RED.httpAdmin.get('/arlo/devices', function(req, res, next) {
 	var id = req.query.service
-	var deviceType = req.query.type || 'basestation'
 	var service = services[id]
 	service.arlo.on('got_devices', function(resp) {
 		var devices = []
 		Object.keys(resp).forEach(function(key) {
 			var device = resp[key]
-			if (device.getType() === deviceType) {
-				devices.push({
-					name: device.getName(),
-					model: device.getModel(),
-					id: device.getSerialNumber()
-				})
-			}
+			devices.push({
+				name: device.getName(),
+				model: device.getModel(),
+				id: device.getSerialNumber()
+			})
 		})
 		res.end(JSON.stringify(devices))
 	})

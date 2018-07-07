@@ -75,8 +75,7 @@
 			var config = RED.nodes.node($('#node-input-service').val())
 			if (config && config.id) {
 				$.getJSON('arlo/devices', {
-					service: config.id,
-					type: 'basestation'
+					service: config.id
 				})
 					.done(function(data) {
 						RED.notify('Devices received.', 'info')
