@@ -45,25 +45,25 @@ module.exports = function(RED) {
 
 		switch(status) {
 			case 'init':
-				self.emit('statusUpdate', {
+				self.status({
 					fill: 'yellow',
 					shape: 'ring',
 					text: 'Initializing service..'
-				})
+				});
 				break;
 			case 'ready':
-				self.emit('statusUpdate', {
+				self.status({
 					fill: 'green',
 					shape: 'dot',
 					text: 'Ready'
-				})
+				});
 				break;
 			case 'error':
-				self.emit('statusUpdate', {
+				self.status({
 					fill: 'red',
 					shape: 'ring',
 					text: 'Error'
-				})
+				});
 				break;
 		}
     }
