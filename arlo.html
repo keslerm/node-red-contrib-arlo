@@ -41,7 +41,6 @@
 <script type='text/javascript'>
   RED.nodes.registerType('arlo-in', {
 	category: 'arlo',
-	paletteLabel: 'Arlo In',
 	defaults: {
 		name: {
 			value: '',
@@ -65,7 +64,7 @@
 	color: '#06a84e',
 	icon: 'arlo.png',
 	label: function() {
-		return this.name ? this.name : 'Arlo In'
+		return this.name ? this.name : 'arlo in'
 	},
 	oneditprepare: function() {
 		var node = this
@@ -128,7 +127,6 @@
 <script type='text/javascript'>
   RED.nodes.registerType('arlo-out', {
 	category: 'arlo',
-	paletteLabel: 'Arlo Out',
 	defaults: {
 		name: {
 			value: '',
@@ -149,7 +147,7 @@
 	color: '#06a84e',
 	icon: 'arlo.png',
 	label: function() {
-		return this.name ? this.name : 'Arlo Out'
+		return this.name ? this.name : 'arlo out'
 	},
 oneditprepare: function() {
 		var node = this
@@ -202,7 +200,6 @@ oneditprepare: function() {
 <script type='text/javascript'>
   RED.nodes.registerType('arlo-stream', {
 	category: 'arlo',
-	paletteLabel: 'Arlo Stream',
 	defaults: {
 		name: {
 			value: '',
@@ -222,7 +219,7 @@ oneditprepare: function() {
 	color: '#06a84e',
 	icon: 'arlo.png',
 	label: function() {
-		return this.name ? this.name : 'Arlo Stream'
+		return this.name ? this.name : 'arlo stream'
 	},
 	oneditprepare: function() {
 		var node = this
@@ -276,7 +273,6 @@ oneditprepare: function() {
 <script type='text/javascript'>
   RED.nodes.registerType('arlo-snapshot', {
 	category: 'arlo',
-	paletteLabel: 'Arlo Snapshot',
 	defaults: {
 		name: {
 			value: '',
@@ -296,7 +292,7 @@ oneditprepare: function() {
 	color: '#06a84e',
 	icon: 'arlo.png',
 	label: function() {
-		return this.name ? this.name : 'Arlo Snapshot'
+		return this.name ? this.name : 'arlo snapshot'
 	},
 	oneditprepare: function() {
 		var node = this
