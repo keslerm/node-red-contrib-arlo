@@ -152,8 +152,9 @@ module.exports = function(RED) {
 						})
 					} else if (n.action == "motion-detected") {
 						device.on(actions[n.action], function(msg) {
-							console.log(msg);
-							self.send(msg);
+							self.send({payload: {
+								motionDetected: msg
+							}});
 						})
 					}
 				}

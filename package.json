@@ -1,6 +1,6 @@
 {
  "name": "node-red-contrib-arlo",
- "version": "0.0.5",
+ "version": "0.0.6",
  "description": "Netgear Arlo Webcam Node-Red node",
  "main": "index.js",
  "scripts": {},
