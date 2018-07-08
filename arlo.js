@@ -50,7 +50,24 @@ module.exports = (RED) => {
 
     var updateStatus = (status) => {
       self.state = status;
+      self.emit('statusUpdate', status);
+    };
 
+    self.init();
+  }
+
+  RED.nodes.registerType('arlo-config', ArloConfig, {
+    credentials: {
+      username: {
+        type: 'text'
+      },
+      password: {
+        type: 'password'
+      }
+    }
+  })
+
+  const statusUpdater = (self, status) => {
       switch (status) {
         case 'init':
           self.status({
@@ -74,23 +91,7 @@ module.exports = (RED) => {
           });
           break;
       }
-
-      self.emit('statusUpdate');
-    };
-
-    self.init();
   }
-
-  RED.nodes.registerType('arlo-config', ArloConfig, {
-    credentials: {
-      username: {
-        type: 'text'
-      },
-      password: {
-        type: 'password'
-      }
-    }
-  })
 
   // Monitor for specific states
   function ArloIn(n) {
@@ -105,11 +106,7 @@ module.exports = (RED) => {
 
     self.config.on('statusUpdate', function () {
 
-      self.status({
-        fill: 'green',
-        shape: 'dot',
-        text: 'ready'
-      });
+      statusUpdater(self, self.config.state);
 
       if (self.config.state === 'ready' && self.config.arlo) {
 
