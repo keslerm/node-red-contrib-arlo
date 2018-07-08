@@ -6,26 +6,15 @@ module.exports = (RED) => {
   // This is specifically to fetch the devices when requested.
   // Really only used when clicking Search Devices in the config
   RED.httpAdmin.get('/arlo/devices', (req, res, next) => {
-    var id = req.query.service;
-    var service = services[id];
+    var self = this
+    RED.nodes.createNode(self, config)
 
-    service.arlo.on('got_devices', (resp) => {
-      var devices = [];
+    //var id = req.query.service;
+    //var service = services[id];
 
-      Object.keys(resp).forEach((key) => {
-        var device = resp[key]
-        devices.push({
-          name: device.getName(),
-          model: device.getModel(),
-          id: device.getSerialNumber()
-        })
-      });
-
-      res.end(JSON.stringify(devices));
-    })
-
-    service.arlo.getDevices();
-  })
+    res.end(JSON.stringify(self.config.devices));
+    // service.arlo.getDevices();
+  });
 
   // Basic configuration, not sure where this is executed
   function ArloConfig(config) {
@@ -38,8 +27,24 @@ module.exports = (RED) => {
 
     self.arlo = new Arlo();
 
-    self.arlo.on('got_devices', () => {
+    self.arlo.on('got_devices', (resp) => {
+      self.debug("Updating devices");
+
       services[self.id] = self;
+
+      Object.keys(resp).forEach((key) => {
+        var device = resp[key]
+        devices.push({
+          name: device.getName(),
+          model: device.getModel(),
+          id: device.getSerialNumber()
+        });
+
+      });
+
+      self.devices = devices;
+
+      self.debug("Devices updated");
       updateStatus('ready');
     });
 
@@ -48,7 +53,7 @@ module.exports = (RED) => {
       self.arlo.login(self.credentials.username, self.credentials.password)
     };
 
-    var updateStatus = (status) => {
+    var updateStatus = (self, status) => {
       self.state = status;
       self.emit('statusUpdate', status);
     };
@@ -68,29 +73,29 @@ module.exports = (RED) => {
   })
 
   const statusUpdater = (self, status) => {
-      switch (status) {
-        case 'init':
-          self.status({
-            fill: 'yellow',
-            shape: 'ring',
-            text: 'initializing'
-          });
-          break;
-        case 'ready':
-          self.status({
-            fill: 'green',
-            shape: 'dot',
-            text: 'ready'
-          });
-          break;
-        case 'error':
-          self.status({
-            fill: 'red',
-            shape: 'ring',
-            text: 'error'
-          });
-          break;
-      }
+    switch (status) {
+      case 'init':
+        self.status({
+          fill: 'yellow',
+          shape: 'ring',
+          text: 'initializing'
+        });
+        break;
+      case 'ready':
+        self.status({
+          fill: 'green',
+          shape: 'dot',
+          text: 'ready'
+        });
+        break;
+      case 'error':
+        self.status({
+          fill: 'red',
+          shape: 'ring',
+          text: 'error'
+        });
+        break;
+    }
   }
 
   // Monitor for specific states
