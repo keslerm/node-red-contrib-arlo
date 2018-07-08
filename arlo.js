@@ -49,7 +49,7 @@ module.exports = (RED) => {
     };
 
     var updateStatus = (status) => {
-      self.state = status
+      self.state = status;
 
       switch (status) {
         case 'init':
@@ -105,6 +105,12 @@ module.exports = (RED) => {
 
     self.config.on('statusUpdate', function () {
       if (self.config.state === 'ready' && self.config.arlo) {
+        self.status({
+          fill: 'green',
+          shape: 'dot',
+          text: 'ready'
+        });
+
         var device = self.config.arlo.devices[n.device]
         if (device) {
           var msg = {}
