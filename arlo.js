@@ -32,6 +32,7 @@ module.exports = (RED) => {
 
       services[self.id] = self;
 
+      var devices = [];
       Object.keys(resp).forEach((key) => {
         var device = resp[key]
         devices.push({
