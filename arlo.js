@@ -104,12 +104,14 @@ module.exports = (RED) => {
     self.config = RED.nodes.getNode(n.service)
 
     self.config.on('statusUpdate', function () {
+
+      self.status({
+        fill: 'green',
+        shape: 'dot',
+        text: 'ready'
+      });
+
       if (self.config.state === 'ready' && self.config.arlo) {
-        self.status({
-          fill: 'green',
-          shape: 'dot',
-          text: 'ready'
-        });
 
         var device = self.config.arlo.devices[n.device]
         if (device) {
