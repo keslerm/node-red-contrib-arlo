@@ -53,7 +53,7 @@ module.exports = (RED) => {
       self.arlo.login(self.credentials.username, self.credentials.password)
     };
 
-    var updateStatus = (self, status) => {
+    var updateStatus = (status) => {
       self.state = status;
       self.emit('statusUpdate', status);
     };
